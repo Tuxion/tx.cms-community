@@ -1,0 +1,14 @@
+{
+  "title": "Community",
+  "description": "A community component that allows extended profile and group pages.",
+  "type": "manual",
+  "dbUpdates": true,
+  "versions": [
+    {
+      "version": "0.1",
+      "date": "2013-04-08",
+      "description": "Starting with the ALPHA version.",
+      "changes": []
+    }
+  ]
+}
