@@ -16,13 +16,13 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   {
     
     if($forced === true){
-      tx('Sql')->query('DROP TABLE IF EXISTS `#__community_user_profile`');
-      tx('Sql')->query('DROP TABLE IF EXISTS `#__community_user_group_profile`');
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__community_user_profiles`');
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__community_user_group_profiles`');
     }
     
     tx('Sql')->query('
-      CREATE TABLE `#__community_user_profile` (
-        `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+      CREATE TABLE `#__community_user_profiles` (
+        `user_id` int(10) unsigned NOT NULL,
         `title` varchar(255) NULL,
         `bio` LONGTEXT NULL,
         `signature` TEXT NULL,
@@ -38,17 +38,17 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       ) ENGINE=MyISAM DEFAULT CHARSET=utf8
     ');
     tx('Sql')->query('
-      CREATE TABLE `#__community_user_group_profile` (
+      CREATE TABLE `#__community_user_group_profiles` (
         `user_group_id` int(10) unsigned NOT NULL,
         `owner_id` int(10) unsigned NOT NULL,
-        `admission` ENUM(\'OPEN\', \'APPROVE\', \'INVITE\', \'CLOSED\'),
+        `admission` ENUM(\'OPEN\', \'APPROVE\', \'INVITE\', \'CLOSED\') NOT NULL DEFAULT \'OPEN\',
         `title` varchar(255) NULL,
-        `bio` LONGTEXT NULL,
         `signature` TEXT NULL,
         `public_muc` varchar(255) NULL,
         `public_jid` varchar(255) NULL,
         `public_email` varchar(255) NULL,
         `public_phonenumber` varchar(255) NULL,
+        `logo_image_id` int(10) unsigned NULL,
         `header_image_id` int(10) unsigned NULL,
         `is_public` bit(1) NOT NULL DEFAULT b\'0\',
         `is_listed` bit(1) NOT NULL DEFAULT b\'0\',
@@ -59,7 +59,6 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       ) ENGINE=MyISAM DEFAULT CHARSET=utf8
     ');
     
-    /*
     //Queue self-deployment with CMS component.
     $this->queue(array(
       'component' => 'cms',
@@ -69,17 +68,17 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
         //Ensures the mail component and mailing view.
         tx('Component')->helpers('cms')->_call('ensure_pagetypes', array(
           array(
-            'name' => 'mail',
-            'title' => 'Mailing component'
+            'name' => 'community',
+            'title' => 'A community component that allows extended profile and group pages'
           ),
           array(
-            'mailing' => true
+            'users' => false,
+            'usergroups' => false
           )
         ));
         
       }
     ); //END - Queue CMS 1.2+
-    */
     
   }
   

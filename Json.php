@@ -26,4 +26,27 @@ class Json extends \dependencies\BaseComponent
     
   */
   
+  protected function update_user_profile($data, $params)
+  {
+    
+    $uid = $data->user_id;
+    
+    //See if we are logged in at all.
+    if(!tx('Account')->check_level(1))
+      throw new \exception\Authorisation('You are not logged in.');
+    
+    //Check if we can actually do this. You can edit yourself or use super admin powers.
+    if(tx('Account')->user->id->get('int') !== $uid->get('int') && !tx('Account')->check_level(2))
+      throw new \exception\Authorisation('This is not your profile.');
+    
+    return tx('Sql')
+      ->model('community', 'UserProfiles')
+      ->set($data)
+      ->validate_model(array(
+        'nullify' => true
+      ))
+      ->save();
+    
+  }
+  
 }

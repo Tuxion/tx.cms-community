@@ -1,0 +1,20 @@
+.community.user-listing,
+.community.user-group-listing{
+  list-style:none;
+}
+
+.community .profile-link{
+  text-decoration:none;
+}
+
+.community .avatar-wrapper{
+  float:left;
+  padding-right:5px;
+}
+.community .avatar{
+  width:64px;
+}
+.community span{
+  display:block;
+  line-height:180%;
+}

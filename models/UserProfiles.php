@@ -1,14 +1,14 @@
 <?php namespace components\community\models; if(!defined('TX')) die('No direct access.');
 
-class UserProfile extends \dependencies\BaseModel
+class UserProfiles extends \dependencies\BaseModel
 {
   
   protected static
     
-    $table_name = 'community_user_profile',
+    $table_name = 'community_user_profiles',
     
     $relations = array(
-      'Accounts' => array('user_id' => 'accounts.Accounts.id'),
+      'Accounts' => array('user_id' => 'account.Accounts.id'),
       'Images' => array('header_image_id' => 'media.Images.id')
     ),
     
@@ -25,15 +25,28 @@ class UserProfile extends \dependencies\BaseModel
     
     $validate = array(
       'user_id' => array('required', 'number'=>'integer', 'gt'=>0),
+      'header_image_id' => array('number'=>'integer', 'gt'=>0),
       'title' => array('string', 'no_html', 'between'=>array(1,255)),
       'bio' => array('string', 'not_empty'),
-      'signature' => array('string', 'not_empty', 'between'=>array(1, 65535)),
-      'public_jid' => array('string', 'jid'=>'bare', 'between'=>array(1,255)),
-      'public_email' => array('string', 'email', 'between'=>array(1,255)),
-      'public_phonenumber' => array('string', 'phonenumber'=>'+31', 'between'=>array(1,255)),
-      'header_image_id' => array('number'=>'integer', 'gt'=>0),
+      'signature' => array('string', 'not_empty', 'between'=>array(0, 65535)),
+      'public_jid' => array('string', 'jid'=>'bare', 'between'=>array(0,255)),
+      'public_email' => array('string', 'email', 'between'=>array(0,255)),
+      'public_phonenumber' => array('string', 'phonenumber'=>'+31', 'between'=>array(0,255)),
       'is_public' => array('boolean'),
       'is_listed' => array('boolean')
     );
+  
+  public function get_account()
+  {
+    return tx('Sql')
+      ->table('account', 'Accounts')
+      ->pk($this->user_id)
+      ->execute_single();
+  }
+  
+  public function get_info()
+  {
+    return $this->account->user_info;
+  }
   
 }

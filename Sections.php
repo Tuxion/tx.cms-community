@@ -24,4 +24,60 @@ class Sections extends \dependencies\BaseViews
     
   */
   
+  protected function user_listing($options)
+  {
+    
+    //Gets all public profiles.
+    return tx('Sql')
+      ->table('community', 'UserProfiles')
+      ->where('is_public', true)
+      ->where('is_listed', true)
+      ->execute();
+    
+  }
+  
+  protected function user_profile($account)
+  {
+    
+    return tx('Sql')
+      ->table('community', 'UserProfiles')
+      ->pk($account->id)
+      ->execute_single()
+      ->is('empty', function()use($account){
+        return tx('Sql')
+          ->model('community', 'UserProfiles')->set(array(
+            'user_id' => $account->id
+          ));
+      });
+    
+  }
+  
+  protected function user_group_listing($options)
+  {
+    
+    //Gets all public profiles.
+    return tx('Sql')
+      ->table('community', 'UserGroupProfiles')
+      ->where('is_public', true)
+      ->where('is_listed', true)
+      ->execute();
+    
+  }
+  
+  protected function user_group_profile($user_group)
+  {
+    
+    return tx('Sql')
+      ->table('community', 'UserGroupProfiles')
+      ->pk($user_group->id)
+      ->execute_single()
+      ->is('empty', function()use($user_group){
+        return tx('Sql')
+          ->model('community', 'UserGroupProfiles')->set(array(
+            'user_group_id' => $user_group->id
+          ));
+      });
+    
+  }
+  
 }
