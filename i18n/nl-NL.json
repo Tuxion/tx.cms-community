@@ -1,0 +1,14 @@
+{
+  
+  "USERS_VIEW_TITLE":"Community: profielpagina",
+  "USERS_VIEW_DESCRIPTION":"Profielpagina, een community gerichte profielpagina met meer opties dan een standaard profielpagina",
+  
+  "USERGROUPS_VIEW_TITLE":"Community: groepspagina",
+  "USERGROUPS_VIEW_DESCRIPTION":"Groepspagina, een community gerichte groepspagina",
+  
+  "OPEN": "Open voor iedereen",
+  "APPROVE": "Open voor applicaties",
+  "INVITE": "Enkel op uitnodiging",
+  "CLOSED": "Gesloten"
+  
+}

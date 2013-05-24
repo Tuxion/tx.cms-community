@@ -10,7 +10,33 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   protected
     $component = 'community',
     $updates = array(
+      '0.1' => '0.2'
     );
+  
+  public function update_to_0_2($current_version, $forced)
+  {
+    
+    //Queue self-deployment with CMS component.
+    $this->queue(array(
+      'component' => 'cms',
+      'min_version' => '3.0'
+      ), function($version){
+        
+        //Ensures the mail component and mailing view.
+        tx('Component')->helpers('cms')->_call('ensure_pagetypes', array(
+          array(
+            'name' => 'community',
+            'title' => 'A community component that allows extended profile and group pages'
+          ),
+          array(
+            'settings' => 'SETTINGS'
+          )
+        ));
+        
+      }
+    ); //END - Queue CMS
+    
+  }
   
   public function install_0_1($dummydata, $forced)
   {

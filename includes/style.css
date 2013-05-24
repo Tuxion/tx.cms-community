@@ -2,6 +2,16 @@
 .community.user-group-listing{
   list-style:none;
 }
+  .community.user-group-listing .create_group,
+  .community.user-group-listing .create-community-usergroup-form{
+    line-height:2em;
+    margin-bottom:1em;
+  }
+
+.community.user-listing .profile,
+.community.user-group-listing .profile{
+  margin:0.5em 0;
+}
 
 .community .profile-link{
   text-decoration:none;
@@ -14,7 +24,51 @@
 .community .avatar{
   width:64px;
 }
-.community span{
+
+.community .group.profile .logo-wrapper{
+  float:left;
+  padding-right:1em;
+}
+.community .group.profile .logo{
+  width:80px;
+}
+  
+.community .group.profile span{
   display:block;
   line-height:180%;
 }
+
+.create-community-usergroup-form{
+  display:none;
+}
+.create-community-usergroup-form label{
+  display:none;
+}
+
+.edit-community-usergroup-form{
+  max-width:350px;
+}
+  .edit-community-usergroup-form label{
+    display:block;
+  }
+  .edit-community-usergroup-form input[type=text],
+  .edit-community-usergroup-form input[type=password],
+  .edit-community-usergroup-form textarea{
+    width:100%;
+  }
+  .edit-community-usergroup-form textarea{
+    height:6em;
+  }
+  .edit-community-usergroup-form .ctrlHolder,
+  .edit-community-usergroup-form .buttonHolder{
+    margin-bottom:1em;
+  }
+  .edit-community-usergroup-form .for_logo_image_id.image-upload-field{
+    height:150px;
+  }
+    .edit-community-usergroup-form .for_logo_image_id .preview-image,
+    .edit-community-usergroup-form .for_logo_image_id .preview-image-background,
+    .edit-community-usergroup-form .for_logo_image_id .drop,
+    .edit-community-usergroup-form .for_logo_image_id .filelist{
+      height:90px;
+    }

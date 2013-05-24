@@ -9,12 +9,16 @@ class UserGroupProfiles extends \dependencies\BaseModel
     
     $relations = array(
       'Accounts' => array('owner_id' => 'account.Accounts.id'),
-      'Images' => array('header_image_id' => 'media.Images.id')
+      'Images' => array('header_image_id' => 'media.Images.id'),
+      'SecondaryImages' => array('logo_image_id' => 'SecondaryImages.id')
     ),
     
     $labels = array(
       'owner_id' => 'Owner',
+      'logo_image_id' => 'Logo (180 x 180 pixels)',
+      'header_image_id' => 'Header image',
       'title' => 'Group subtitle',
+      'admission' => 'Admission type',
       'public_muc' => 'Public XMPP multi-user chat',
       'public_jid' => 'Public XMPP address',
       'public_email' => 'Public e-mail address',
@@ -26,18 +30,18 @@ class UserGroupProfiles extends \dependencies\BaseModel
     
     $validate = array(
       'user_group_id' => array('required', 'number'=>'integer', 'gt'=>0),
+      'title' => array('string', 'no_html', 'between'=>array(0,255)),
       'logo_image_id' => array('number'=>'integer', 'gt'=>0),
       'header_image_id' => array('number'=>'integer', 'gt'=>0),
-      'title' => array('string', 'no_html', 'between'=>array(1,255)),
-      'signature' => array('string', 'not_empty', 'between'=>array(1, 65535)),
-      'public_muc' => array('string', 'jid'=>'bare', 'between'=>array(1,255)),
-      'public_jid' => array('string', 'jid'=>'bare', 'between'=>array(1,255)),
-      'public_email' => array('string', 'email', 'between'=>array(1,255)),
-      'public_phonenumber' => array('string', 'phonenumber'=>'+31'),
-      'owner_id' => array('required', 'number'=>'integer', 'gt'=>0),
-      'admission' => array('required', 'string', 'in'=>array('OPEN', 'APPROVE', 'INVITE', 'CLOSED')),
       'is_public' => array('boolean'),
-      'is_listed' => array('boolean')
+      'is_listed' => array('boolean'),
+      'admission' => array('required', 'string', 'in'=>array('OPEN', 'APPROVE', 'INVITE', 'CLOSED')),
+      'public_muc' => array('string', 'jid'=>'bare', 'between'=>array(0,255)),
+      'public_jid' => array('string', 'jid'=>'bare', 'between'=>array(0,255)),
+      'public_email' => array('string', 'email', 'between'=>array(0,255)),
+      'public_phonenumber' => array('string', 'phonenumber'=>'+31'),
+      'signature' => array('string', 'not_empty', 'between'=>array(0, 65535)),
+      'owner_id' => array('required', 'number'=>'integer', 'gt'=>0)
     );
   
   public function get_info()
@@ -45,6 +49,14 @@ class UserGroupProfiles extends \dependencies\BaseModel
     return tx('Sql')
       ->table('account', 'UserGroups')
       ->pk($this->user_group_id)
+      ->execute_single();
+  }
+  
+  public function get_logo()
+  {
+    return tx('Sql')
+      ->table('media', 'Images')
+      ->pk($this->logo_image_id)
       ->execute_single();
   }
   

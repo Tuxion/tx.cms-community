@@ -3,26 +3,13 @@
 class Sections extends \dependencies\BaseViews
 {
   
-  /*
-    
-    # The Sections.php file
-    
-    This is where you define sections.
-    Sections are used to insert a part of a page that is for private use inside the component.
-    This allows you to reuse pieces of HTML and allows you to reload by replacing the HTML.
-    If your section is very autonomous and might be useful for other components,
-    you probably should rewrite it as a Module.php function instead.
-    
-    Call a section from the client-side using:
-      http://mysite.com/index.php?section=community/function_name
-    
-    Call a section from the server-side using:
-      tx('Component')->sections('community')->get_html('function_name', Data($options));
-    
-    Read more about sections here:
-      https://github.com/Tuxion/tuxion.cms/wiki/Sections.php
-    
-  */
+  protected
+    $permissions = array(
+      'user_listing' => 0,
+      'user_profile' => 0,
+      'user_group_listing' => 0,
+      'user_group_profile' => 0
+    );
   
   protected function user_listing($options)
   {
@@ -38,6 +25,8 @@ class Sections extends \dependencies\BaseViews
   
   protected function user_profile($account)
   {
+    
+    #TODO: Check if public.
     
     return tx('Sql')
       ->table('community', 'UserProfiles')
@@ -56,16 +45,31 @@ class Sections extends \dependencies\BaseViews
   {
     
     //Gets all public profiles.
-    return tx('Sql')
-      ->table('community', 'UserGroupProfiles')
-      ->where('is_public', true)
-      ->where('is_listed', true)
-      ->execute();
+    return array(
+      'groups' => tx('Sql')
+        ->table('community', 'UserGroupProfiles')
+        ->is(!tx('Account')->check_level(2), function($t){
+          $t->where(tx('Sql')->conditions()
+            ->add('1', array('is_public', true))
+            ->add('2', array('is_listed', true))
+            ->add('3', array('owner_id', tx('Account')->user->id))
+            ->combine('4', array('1', '2'), 'AND')
+            ->combine('5', array('4', '3'), 'OR')
+            ->utilize('5')
+          );
+        })
+        ->execute(),
+      'allow_create' => tx('Account')->check_level(
+        tx('Config')->user('community_allow_usergroup_creation')->get('boolean') ? 1 : 2
+      )
+    );
     
   }
   
   protected function user_group_profile($user_group)
   {
+    
+    #TODO: Check if public.
     
     return tx('Sql')
       ->table('community', 'UserGroupProfiles')

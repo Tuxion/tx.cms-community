@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.2",
+      "date": "2013-05-24",
+      "description": "Group management additions.",
+      "changes": []
+    },
+    {
       "version": "0.1",
       "date": "2013-04-08",
       "description": "Starting with the ALPHA version.",

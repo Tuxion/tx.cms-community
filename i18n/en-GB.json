@@ -1,1 +1,9 @@
-{}
+{
+  
+  "USERS_VIEW_TITLE":"Community: profile page",
+  "USERS_VIEW_DESCRIPTION":"Profile page, a community oriented profile page with more options than a standard profile page",
+  
+  "USERGROUPS_VIEW_TITLE":"Community: group page",
+  "USERGROUPS_VIEW_DESCRIPTION":"Group page, a community oriented group page"
+  
+}
