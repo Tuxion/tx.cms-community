@@ -6,9 +6,40 @@
   "USERGROUPS_VIEW_TITLE":"Community: groepspagina",
   "USERGROUPS_VIEW_DESCRIPTION":"Groepspagina, een community gerichte groepspagina",
   
+  "SETTINGS_VIEW_TITLE":"Community instellingen",
+  "SETTINGS_VIEW_DESCRIPTION":"Hier zijn de instellingen te wijzigen van het community component",
+  
+  
   "OPEN": "Open voor iedereen",
   "APPROVE": "Open voor applicaties",
   "INVITE": "Enkel op uitnodiging",
-  "CLOSED": "Gesloten"
+  "CLOSED": "Gesloten",
+  
+  
+  "Admission type": "Toelatingstype",
+  "Allow users to create their own usersgroups": "Sta gebruikers toe hun eigen gebruikersgroepen aan te maken",
+  
+  "Create group": "Groep aanmaken",
+  
+  "Group management": "Groepsbeheer",
+  "Group title": "Groepstitel",
+  "Group subtitle": "Groepsondertitel",
+  
+  "Header image": "Header-afbeelding",
+  
+  "Include profile in public listing": "Neem profiel op in publieke lijst",
+  
+  "Logo (180 x 180 pixels)": "Logo (180 x 180 pixels)",
+  
+  "Make profile public": "Maak profiel publiekelijk",
+  
+  "Not implemented": "Niet geïmplementeerd",
+  
+  "Public phone number": "Publiekelijke telefoonnummer",
+  "Public e-mail address": "Publiekelijke e-mailadres",
+  "Public XMPP address": "Publiekelijke XMPP-adres",
+  "Public XMPP multi-user chat": "Publiekelijke XMPP multi-user chat",
+  
+  "Signature": "Handtekening"
   
 }

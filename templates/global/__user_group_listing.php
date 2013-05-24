@@ -9,7 +9,7 @@
       
       <label for="l_title"><?php __($names->component, 'Group title'); ?></label>
       <input type="text" id="l_title" name="title" value="" placeholder="<?php __($names->component, 'Group title'); ?>" />
-      <input type="submit" class="primaryAction button black" value="<?php __($names->component, 'Create'); ?>" />
+      <input type="submit" class="primaryAction button black" value="<?php __('CREATE_VERB'); ?>" />
       
     </form>
     
