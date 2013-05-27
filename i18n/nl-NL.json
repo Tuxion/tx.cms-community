@@ -40,6 +40,12 @@
   "Public XMPP address": "Publiekelijke XMPP-adres",
   "Public XMPP multi-user chat": "Publiekelijke XMPP multi-user chat",
   
-  "Signature": "Handtekening"
+  "Signature": "Handtekening",
+  
+  "No groups were found": "Er zijn geen groepen gevonden",
+  "No users were found": "Er zijn geen gebruikers gevonden",
+  
+  "Groups": "Groepen",
+  "Users": "Gebruikers"
   
 }
