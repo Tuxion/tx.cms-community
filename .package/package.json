@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.0.4",
+      "date": "2013-05-28",
+      "description": "Switched to new version naming convention. Removed the invitation option for groups for security reasons. Consolidated two page types into one since it's more logical.",
+      "changes": []
+    },
+    {
       "version": "0.3",
       "date": "2013-05-27",
       "description": "Group descriptions added and group application process implemented.",

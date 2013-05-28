@@ -1,19 +1,21 @@
 <?php namespace components\community; if(!defined('TX')) die('No direct access.'); ?>
 
-<div class="community usergroup-profile-edit">
+<div class="community user-group-profile-edit">
   
   <h1 class="title"><?php echo $data->profile->info->title; ?></h1>
   
   <div class="editor-bar">
-    <a href="<?php echo url('edit=NULL'); ?>" class="button"><i class="icon-eye-open"></i> <?php __('View profile'); ?></a> - 
-    <a href="#" class="button"><i class="icon-remove-sign"></i> <?php __('Delete profile'); ?></a>
+    <a href="<?php echo url('edit=NULL'); ?>" class="button"><i class="icon-eye-open"></i> <?php __($names->component, 'View profile'); ?></a> - 
+    <a href="#" class="button delete-user-group-profile"
+        data-id="<?php echo $data->profile->user_group_id; ?>"
+        data-title="<?php echo $data->profile->info->title; ?>"><i class="icon-remove-sign"></i> <?php __($names->component, 'Delete profile'); ?></a>
   </div>
 
   <?php
   
   $data->profile->render_form($id, '?rest=community/user_group_profile', array(
     'method' => 'put',
-    'class' => 'edit-community-usergroup-form',
+    'class' => 'edit-community-user-group-form',
     'relations' => array('Images', 'SecondaryImages'),
     'fields' => array(
       'user_group_id' => array('type' => '\\dependencies\\forms\\HiddenField'),

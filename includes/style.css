@@ -2,7 +2,8 @@
   line-height:3em;
 }
 
-.community.usergroup-profile .header-wrapper{
+.community.user-profile .header-wrapper,
+.community.user-group-profile .header-wrapper{
   text-align:center;
   background:no-repeat center center;
   background-size:cover;
@@ -11,7 +12,8 @@
   border-radius:5px;
   border:1px solid #aaa;
 }
-  .community.usergroup-profile .header{
+  .community.user-profile .header,
+  .community.user-group-profile .header{
     text-align:center;
     position:relative;
     display:inline-block;
@@ -22,46 +24,59 @@
     border-radius:10px;
     box-shadow:1px 3px 4px rgba(0,0,0,0.3);
   }
-    .community.usergroup-profile .contact-info{
+    .community.user-profile .contact-info,
+    .community.user-group-profile .contact-info{
       position:absolute;
       top:25px;
       right:20px;
     }
-      .community.usergroup-profile .contact-info a{
+      .community.user-profile .contact-info a,
+      .community.user-group-profile .contact-info a{
         display:block;
         text-decoration:none;
         text-align:right;
         padding:2px 0 2px 5px;
       }
-      .community.usergroup-profile .contact-info a:hover{
+      .community.user-profile .contact-info a:hover,
+      .community.user-group-profile .contact-info a:hover{
         background:rgba(255,255,255,0.8);
         border-radius:2px;
       }
-        .community.usergroup-profile .contact-info a i{
+        .community.user-profile .contact-info a i,
+        .community.user-group-profile .contact-info a i{
           margin:0 5px;
           display:inline-block;
           width:16px;
           text-align:center;
         }
-        .community.usergroup-profile .contact-info a span{
+        .community.user-profile .contact-info a span,
+        .community.user-group-profile .contact-info a span{
           display:none;
         }
-        .community.usergroup-profile .contact-info a:hover span{
+        .community.user-profile .contact-info a:hover span,
+        .community.user-group-profile .contact-info a:hover span{
           display:inline;
         }
       
-    .community.usergroup-profile .logo{
+    .community.user-profile .logo,
+    .community.user-group-profile .logo{
       width:90px;
       margin:0;
       margin-top:8px;
     }
+
+.community .user-group-application-button{
+  font-size:2em;
+  margin-right:0.5em;
+  display:inline-block;
+}
 
 .community.user-listing,
 .community.user-group-listing{
   list-style:none;
 }
   .community.user-group-listing .create_group,
-  .community.user-group-listing .create-community-usergroup-form{
+  .community.user-group-listing .create-community-user-group-form{
     line-height:2em;
     margin-bottom:1em;
   }
@@ -99,37 +114,37 @@
   line-height:180%;
 }
 
-.create-community-usergroup-form{
+.create-community-user-group-form{
   display:none;
 }
-.create-community-usergroup-form label{
+.create-community-user-group-form label{
   display:none;
 }
 
-.edit-community-usergroup-form{
+.edit-community-user-group-form{
   max-width:350px;
 }
-  .edit-community-usergroup-form label{
+  .edit-community-user-group-form label{
     display:block;
   }
-  .edit-community-usergroup-form input[type=text],
-  .edit-community-usergroup-form input[type=password],
-  .edit-community-usergroup-form textarea{
+  .edit-community-user-group-form input[type=text],
+  .edit-community-user-group-form input[type=password],
+  .edit-community-user-group-form textarea{
     width:100%;
   }
-  .edit-community-usergroup-form textarea{
+  .edit-community-user-group-form textarea{
     height:6em;
   }
-  .edit-community-usergroup-form .ctrlHolder,
-  .edit-community-usergroup-form .buttonHolder{
+  .edit-community-user-group-form .ctrlHolder,
+  .edit-community-user-group-form .buttonHolder{
     margin-bottom:1em;
   }
-  .edit-community-usergroup-form .for_logo_image_id.image-upload-field{
+  .edit-community-user-group-form .for_logo_image_id.image-upload-field{
     height:150px;
   }
-    .edit-community-usergroup-form .for_logo_image_id .preview-image,
-    .edit-community-usergroup-form .for_logo_image_id .preview-image-background,
-    .edit-community-usergroup-form .for_logo_image_id .drop,
-    .edit-community-usergroup-form .for_logo_image_id .filelist{
+    .edit-community-user-group-form .for_logo_image_id .preview-image,
+    .edit-community-user-group-form .for_logo_image_id .preview-image-background,
+    .edit-community-user-group-form .for_logo_image_id .drop,
+    .edit-community-user-group-form .for_logo_image_id .filelist{
       height:90px;
     }

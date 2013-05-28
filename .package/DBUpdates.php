@@ -11,8 +11,49 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     $component = 'community',
     $updates = array(
       '0.1' => '0.2',
-      '0.2' => '0.3'
+      '0.2' => '0.3',
+      '0.3' => '0.0.4'
     );
+  
+  public function update_to_0_0_4($current_version, $forced)
+  {
+    
+    try{
+      
+      tx('Sql')->query('
+        ALTER TABLE `#__community_user_group_profiles`
+          MODIFY `admission` ENUM(\'OPEN\', \'APPROVE\', \'CLOSED\') NOT NULL DEFAULT \'APPROVE\'
+      ');
+      
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
+    
+    //Queue self-deployment with CMS component.
+    $this->queue(array(
+      'component' => 'cms',
+      'min_version' => '0.4.0'
+      ), function($version){
+        
+        //Ensures the mail component and mailing view.
+        tx('Component')->helpers('cms')->_call('ensure_pagetypes', array(
+          array(
+            'name' => 'community',
+            'title' => 'A community component that allows extended profile and group pages'
+          ),
+          array(
+            'users' => 'DELETE',
+            'usergroups' => 'DELETE',
+            'user_groups' => 'PAGETYPE'
+          )
+        ));
+        
+      }
+    ); //END - Queue CMS
+    
+  }
   
   public function update_to_0_3($current_version, $forced)
   {

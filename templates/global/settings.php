@@ -7,8 +7,8 @@
   <div class="ctrlHolder">
     <label><?php __($names->component, 'Group management'); ?>
     <label>
-      <input type="checkbox" name="community_allow_usergroup_creation[default]" value="0" disabled="disabled"<?php if($data->community_allow_usergroup_creation->get()) echo ' checked="checked"'; ?> />
-      <?php echo __($names->component, 'Allow users to create their own usergroups', true).' ('.__($names->component, 'Not implemented', 'l', true).')'; ?>
+      <input type="checkbox" name="community_allow_user_group_creation[default]" value="0" disabled="disabled"<?php if($data->community_allow_user_group_creation->get()) echo ' checked="checked"'; ?> />
+      <?php echo __($names->component, 'Allow users to create their own user groups', true).' ('.__($names->component, 'Not implemented', 'l', true).')'; ?>
     </label>
   </div>
   

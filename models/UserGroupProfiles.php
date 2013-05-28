@@ -10,7 +10,8 @@ class UserGroupProfiles extends \dependencies\BaseModel
     $relations = array(
       'Accounts' => array('owner_id' => 'account.Accounts.id'),
       'Images' => array('header_image_id' => 'media.Images.id'),
-      'SecondaryImages' => array('logo_image_id' => 'SecondaryImages.id')
+      'SecondaryImages' => array('logo_image_id' => 'SecondaryImages.id'),
+      'AccountsToUserGroups' => array('user_group_id' => 'account.AccountsToUserGroups.user_group_id')
     ),
     
     $labels = array(
@@ -37,7 +38,7 @@ class UserGroupProfiles extends \dependencies\BaseModel
       'header_image_id' => array('number'=>'integer', 'gt'=>0),
       'is_public' => array('boolean'),
       'is_listed' => array('boolean'),
-      'admission' => array('required', 'string', 'in'=>array('OPEN', 'APPROVE', 'INVITE', 'CLOSED')),
+      'admission' => array('required', 'string', 'in'=>array('OPEN', 'APPROVE', 'CLOSED')),
       'public_muc' => array('string', 'jid'=>'bare', 'between'=>array(0,255)),
       'public_jid' => array('string', 'jid'=>'bare', 'between'=>array(0,255)),
       'public_email' => array('string', 'email', 'between'=>array(0,255)),
@@ -90,6 +91,82 @@ class UserGroupProfiles extends \dependencies\BaseModel
       ->where('user_group_id', $this->user_group_id)
       ->join('Accounts', $A)
       ->execute($A);
+  }
+  
+  public function get_applications()
+  {
+    return tx('Sql')
+      ->table('community', 'UserGroupApplications')
+      ->where('user_group_id', $this->user_group_id)
+      ->execute();
+  }
+  
+  public function get_is_currently_member()
+  {
+    
+    if(!tx('Account')->check_level(1))
+      return false;
+    
+    return tx('Sql')
+      ->table('account', 'AccountsToUserGroups')
+      ->where('user_id', tx('Account')->user->id)
+      ->where('user_group_id', $this->user_group_id)
+      ->count()->get() > 0;
+    
+  }
+  
+  public function get_is_currently_applying()
+  {
+    
+    if(!tx('Account')->check_level(1))
+      return false;
+    
+    return tx('Sql')
+      ->table('community', 'UserGroupApplications')
+      ->where('user_id', tx('Account')->user->id)
+      ->where('user_group_id', $this->user_group_id)
+      ->count()->get() > 0;
+    
+  }
+  
+  public function get_can_leave()
+  {
+    
+    if(!$this->is_currently_member->get('boolean'))
+      return false;
+    
+    //Owners can't leave. Only transfer ownership or delete the group.
+    if($this->owner_id->get() === tx('Account')->user->id->get())
+      return false;
+    
+    return true;
+    
+  }
+  
+  public function get_can_apply()
+  {
+    
+    if(!tx('Account')->check_level(1))
+      return false;
+    
+    if($this->is_currently_applying->get('boolean'))
+      return false;
+    
+    if($this->is_currently_member->get('boolean'))
+      return false;
+    
+    return in_array($this->admission->get('string'), array('OPEN', 'APPROVE'));
+    
+  }
+  
+  public function get_can_approve()
+  {
+    return $this->check_edit_permissions();
+  }
+  
+  public function get_can_delete()
+  {
+    return $this->check_edit_permissions();
   }
   
 }

@@ -11,7 +11,7 @@
   <?php foreach($data as $profile): ?>
     
     <li class="user profile">
-      <a class="profile-link clearfix" href="<?php echo url('user='.$profile->user_id); ?>" data-id="<?php echo $profile->user_id; ?>">
+      <a class="profile-link clearfix" href="<?php echo url('group=NULL&user='.$profile->user_id); ?>" data-id="<?php echo $profile->user_id; ?>">
         
         <div class="avatar-wrapper <?php if($profile->info->avatar->is_set()) echo 'has-avatar'; ?>">
           <?php if($profile->info->avatar->is_set()): ?>

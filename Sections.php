@@ -7,6 +7,7 @@ class Sections extends \dependencies\BaseViews
     $permissions = array(
       'user_listing' => 0,
       'user_profile' => 0,
+      'edit_user_profile' => 0,
       'user_group_listing' => 0,
       'user_group_profile' => 0,
       'edit_user_group_profile' => 0
@@ -17,15 +18,14 @@ class Sections extends \dependencies\BaseViews
     
     //Gets all public profiles.
     return tx('Sql')
-      ->table('community', 'UserProfiles')
+      ->table('community', 'UserProfiles', $UP)
       ->where('is_public', true)
       ->where('is_listed', true)
       ->is($options->user_group->is_set(), function($t)use($options){
-        $t->join('Accounts')
-          ->join('AccountsToUserGroups', $ATU)
+        $t->join('AccountsToUserGroups', $ATU)
           ->where("$ATU.user_group_id", $options->user_group);
       })
-      ->execute();
+      ->execute($UP);
     
   }
   
@@ -34,7 +34,7 @@ class Sections extends \dependencies\BaseViews
     
     #TODO: Check if public.
     
-    return tx('Sql')
+    $profile = tx('Sql')
       ->table('community', 'UserProfiles')
       ->pk($account->id)
       ->execute_single()
@@ -44,6 +44,23 @@ class Sections extends \dependencies\BaseViews
             'user_id' => $account->id
           ));
       });
+    
+    return array(
+      'profile' => $profile,
+      'groups' => $this->section('user_group_listing', array('user'=>$profile->user_id))
+    );
+    
+  }
+  
+  protected function edit_user_profile($account)
+  {
+    
+    $dataset = $this->user_profile($account);
+    
+    if(!$dataset['profile']->check_edit_permissions())
+      throw new \exception\Authorisation("You do not have editing permissions for this user.");
+    
+    return $dataset;
     
   }
   
@@ -64,10 +81,14 @@ class Sections extends \dependencies\BaseViews
             ->utilize('5')
           );
         })
+        ->is($options->user->is_set(), function($t)use($options){
+          $t->join('AccountsToUserGroups', $ATU)
+            ->where("$ATU.user_id", $options->user);
+        })
         ->execute(),
       'allow_create' => tx('Account')->check_level(
-        tx('Config')->user('community_allow_usergroup_creation')->get('boolean') ? 1 : 2
-      )
+        tx('Config')->user('community_allow_user_group_creation')->get('boolean') ? 1 : 2
+      ) && !$options->user->is_set()
     );
     
   }
@@ -81,9 +102,6 @@ class Sections extends \dependencies\BaseViews
       ->table('community', 'UserGroupProfiles')
       ->pk($user_group->id)
       ->execute_single()
-      ->is('set', function($profile){
-        $profile->is_editable;
-      })
       ->is('empty', function()use($user_group){
         return tx('Sql')
           ->model('community', 'UserGroupProfiles')->set(array(
@@ -93,14 +111,22 @@ class Sections extends \dependencies\BaseViews
     
     return array(
       'profile' => $profile,
-      'members' => $this->section('user_listing', array('user_group'=>$profile->id))
+      'members' => $this->section('user_listing', array('user_group'=>$profile->user_group_id)),
+      'applying' => $profile->can_approve->get('boolean') ? $profile->applications : null
     );
     
   }
   
   protected function edit_user_group_profile($user_group)
   {
-    return $this->user_group_profile($user_group);
+    
+    $dataset = $this->user_group_profile($user_group);
+    
+    if(!$dataset['profile']->check_edit_permissions())
+      throw new \exception\Authorisation("You do not have editing permissions for this user group.");
+    
+    return $dataset;
+    
   }
   
 }
