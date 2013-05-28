@@ -1,7 +1,5 @@
 <?php namespace components\community; if(!defined('TX')) die('No direct access.'); ?>
 
-<h1><?php __('community', 'Users'); ?></h1>
-
 <ul class="community user-listing">
   
   <?php $data->is('empty', function()use($names){
