@@ -18,6 +18,7 @@ class UserGroupProfiles extends \dependencies\BaseModel
       'logo_image_id' => 'Logo (180 x 180 pixels)',
       'header_image_id' => 'Header image',
       'title' => 'Group subtitle',
+      'description' => 'Group description',
       'admission' => 'Admission type',
       'public_muc' => 'Public XMPP multi-user chat',
       'public_jid' => 'Public XMPP address',
@@ -31,6 +32,7 @@ class UserGroupProfiles extends \dependencies\BaseModel
     $validate = array(
       'user_group_id' => array('required', 'number'=>'integer', 'gt'=>0),
       'title' => array('string', 'no_html', 'between'=>array(0,255)),
+      'description' => array('string'),
       'logo_image_id' => array('number'=>'integer', 'gt'=>0),
       'header_image_id' => array('number'=>'integer', 'gt'=>0),
       'is_public' => array('boolean'),
@@ -58,6 +60,36 @@ class UserGroupProfiles extends \dependencies\BaseModel
       ->table('media', 'Images')
       ->pk($this->logo_image_id)
       ->execute_single();
+  }
+  
+  public function get_header()
+  {
+    return tx('Sql')
+      ->table('media', 'Images')
+      ->pk($this->header_image_id)
+      ->execute_single();
+  }
+  
+  public function check_edit_permissions()
+  {
+    
+    if(tx('Account')->check_level(2))
+      return true;
+    
+    if(tx('Account')->check_level(1) && $this->owner_id->get() === tx('Account')->user->id->get())
+      return true;
+    
+    return false;
+    
+  }
+  
+  public function get_members()
+  {
+    return tx('Sql')
+      ->table('account', 'AccountsToUserGroups')
+      ->where('user_group_id', $this->user_group_id)
+      ->join('Accounts', $A)
+      ->execute($A);
   }
   
 }

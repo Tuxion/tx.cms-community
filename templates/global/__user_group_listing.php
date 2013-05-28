@@ -4,7 +4,7 @@
   
   <?php $data->allow_create->is('true', function()use($names){ ?>
     
-    <a href="#" class="create_group"><span class="icon-group"></span><?php __($names->component, 'Create group'); ?></a>
+    <a href="#" class="create_group"><span class="icon-group"></span> <?php __($names->component, 'Create group'); ?></a>
     <form id="create_community_usergroup" class="form create-community-usergroup-form" method="POST" action="<?php echo url('rest=community/usergroup', true); ?>">
       
       <label for="l_title"><?php __($names->component, 'Group title'); ?></label>

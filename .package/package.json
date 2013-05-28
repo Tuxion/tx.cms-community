@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.3",
+      "date": "2013-05-27",
+      "description": "Group descriptions added and group application process implemented.",
+      "changes": []
+    },
+    {
       "version": "0.2",
       "date": "2013-05-24",
       "description": "Group management additions.",

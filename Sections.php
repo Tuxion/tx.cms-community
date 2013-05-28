@@ -8,7 +8,8 @@ class Sections extends \dependencies\BaseViews
       'user_listing' => 0,
       'user_profile' => 0,
       'user_group_listing' => 0,
-      'user_group_profile' => 0
+      'user_group_profile' => 0,
+      'edit_user_group_profile' => 0
     );
   
   protected function user_listing($options)
@@ -19,6 +20,11 @@ class Sections extends \dependencies\BaseViews
       ->table('community', 'UserProfiles')
       ->where('is_public', true)
       ->where('is_listed', true)
+      ->is($options->user_group->is_set(), function($t)use($options){
+        $t->join('Accounts')
+          ->join('AccountsToUserGroups', $ATU)
+          ->where("$ATU.user_group_id", $options->user_group);
+      })
       ->execute();
     
   }
@@ -71,10 +77,13 @@ class Sections extends \dependencies\BaseViews
     
     #TODO: Check if public.
     
-    return tx('Sql')
+    $profile = tx('Sql')
       ->table('community', 'UserGroupProfiles')
       ->pk($user_group->id)
       ->execute_single()
+      ->is('set', function($profile){
+        $profile->is_editable;
+      })
       ->is('empty', function()use($user_group){
         return tx('Sql')
           ->model('community', 'UserGroupProfiles')->set(array(
@@ -82,6 +91,16 @@ class Sections extends \dependencies\BaseViews
           ));
       });
     
+    return array(
+      'profile' => $profile,
+      'members' => $this->section('user_listing', array('user_group'=>$profile->id))
+    );
+    
+  }
+  
+  protected function edit_user_group_profile($user_group)
+  {
+    return $this->user_group_profile($user_group);
   }
   
 }

@@ -33,7 +33,8 @@ class Views extends \dependencies\BaseViews
       ->execute_single();
     
     return $this->section(
-      $user_group->is_empty() ? 'user_group_listing' : 'user_group_profile',
+      $user_group->is_empty() ? 'user_group_listing' : 
+      (tx('Data')->get->edit->is_set() ? 'edit_user_group_profile' : 'user_group_profile'),
       $user_group
     );
     
