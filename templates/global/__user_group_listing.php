@@ -1,5 +1,7 @@
 <?php namespace components\community; if(!defined('TX')) die('No direct access.'); ?>
 
+<h1><?php __('community', 'Groups'); ?></h1>
+
 <ul class="community user-group-listing">
   
   <?php $data->allow_create->is('true', function()use($names){ ?>
