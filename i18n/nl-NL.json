@@ -35,6 +35,15 @@
   
   "Not implemented": "Niet geïmplementeerd",
   
+  "Edit profile": "Wijzig profiel",
+  "Delete profile": "Verwijder profiel",
+  "Members": "Leden",
+  "Leave group": "Verlaat groep",
+  "Apply for membership": "Verzoek tot lidmaatschap",
+  "Application pending": "In afwachting van aanvraag",
+  "Withdraw application": "Trek aanvraag in",
+  "Group description": "Groepsbeschrijving",
+  
   "Public phone number": "Publiekelijke telefoonnummer",
   "Public e-mail address": "Publiekelijke e-mailadres",
   "Public XMPP address": "Publiekelijke XMPP-adres",

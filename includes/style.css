@@ -8,7 +8,8 @@
   background:no-repeat center center;
   background-size:cover;
   margin:auto;
-  max-width:800px;
+  margin-bottom: 10px;
+  /*max-width:800px;*/
   border-radius:5px;
   border:1px solid #aaa;
 }
@@ -61,8 +62,7 @@
     .community.user-profile .logo,
     .community.user-group-profile .logo{
       width:90px;
-      margin:0;
-      margin-top:8px;
+      margin:8px auto 0 auto;
     }
 
 .community .user-group-application-button{
@@ -96,6 +96,7 @@
 }
 .community .avatar{
   width:64px;
+  margin:0 auto;
 }
 
 .community .group.profile .logo-wrapper{
