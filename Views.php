@@ -30,7 +30,7 @@ class Views extends \dependencies\BaseViews
     //Either show edit or view section if the profile is found.
     if($exists)
       return $this->section(
-        tx('Data')->get->edit->is_set() ? 'edit_user_profile' : 'user_profile',
+        $options->edit->otherwise(tx('Data')->get->edit)->is_set() ? 'edit_user_profile' : 'user_profile',
         $profile
       );
     
