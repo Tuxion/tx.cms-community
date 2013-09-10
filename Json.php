@@ -28,7 +28,17 @@ class Json extends \dependencies\BaseComponent
       ->validate_model(array(
         'nullify' => true
       ))
-      ->save();
+      ->save()
+      ->is(true, function($profile)use($data){
+        
+        $profile->account->merge($data->account->having('username'))->save();
+        $profile->info->merge($data->info->having('avatar_image_id'))->save();
+        
+        //Prevent sensitive data from being sent back.
+        $profile->info->set($profile->info->having('avatar_image_id')->as_array());
+        $profile->account->set($profile->account->having('username')->as_array());
+        
+      });
     
   }
   
